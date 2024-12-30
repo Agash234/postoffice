@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { db} from './firebase'; 
-import { collection , addDoc } from 'firebase/firestore' ;// Import Firebase configuration
+import { collection , addDoc } from 'firebase/firestore' ;
+import { useNavigate } from 'react-router-dom';// Import Firebase configuration
 
 function Main() {
   const [speed, setSpeed] = useState("");
@@ -10,7 +11,9 @@ function Main() {
   const [NormalResult, setNormalResult] = useState('');
   const [ThabalResult, setThabalResult] = useState('');
   const [branchOffice, setBranchOffice] = useState('');
-  const[selectdate,setselectdate]=useState('')
+  const[selectdate,setselectdate]=useState('');
+
+  const navigate=useNavigate()
 
 
 
@@ -73,6 +76,7 @@ function Main() {
 
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", background: "#f0f8ff" }}>
+        <button onClick={() => navigate('/getposts')}>Get Details</button>
       <div className="form-container">
         <div className="form-group">
           <label className="form-label">Branch Office</label>
@@ -137,6 +141,8 @@ function Main() {
 
         <button className="form-submit" type="button" onClick={handleSubmit}>Submit</button>
       </div>
+
+     
     </div>
   );
 }
