@@ -1,0 +1,171 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+table td {
+  font-size: 14px;
+}
+
+
+.speed-post {
+  background-color: #e1f5fe; 
+  color: #0288d1; 
+}
+
+.normal-post {
+  background-color: #fff9c4; 
+  color: #fbc02d; 
+}
+
+.thabal-post {
+  background-color: #fce4ec;
+  color: #d81b60; 
+}
+
+.grand-totals {
+  font-weight: bold;
+  background-color: #dcedc8;
+  color: #388e3c; 
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* for form */
+
+
+.form-container {
+ 
+  padding: 20px;
+  width: 50%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+
+
+.form-input,
+.form-output {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+
+input::placeholder {
+  font-style: italic;
+  color: #888;
+}
+
+
+.form-output {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+
+.form-submit {
+  background-color: #4CAF50; 
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.form-submit:hover {
+  background-color: #45a049;
+}
+
+.form-submit:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+/* style for filter box */
+
+
+.filter-container {
+  display: flex;
+  justify-content: space-between; 
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9; 
+  border-radius: 8px; 
+}
+.filter-container button{
+  padding:0px 10px;
+  background-color: #0288d1;
+  border:none;
+  color:white;
+  width: 10%;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+.filter-start, .filter-end {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 20px; 
+}
+
+
+.filter-start label, .filter-end label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px; 
+}
+
+
+.filter-start input[type="date"], .filter-end input[type="date"] {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  display: block;
+}
