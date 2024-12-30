@@ -17,64 +17,24 @@ function DailyPostDetails() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
-  useEffect(() => {
-    const fetchDailyPosts = async () => {
-        try {
-          setIsLoading(true);
-          let queryRef = collection(db, 'posts');
-    
-          if (startDate) queryRef = query(queryRef, where('date', '>=', startDate));
-          if (endDate) queryRef = query(queryRef, where('date', '<=', endDate));
-    
-          const snapshot = await getDocs(queryRef);
-          const posts = snapshot.docs.map(doc => doc.data());
-    
-          // Group the posts by date and branch
-          const groupedData = posts.reduce((acc, post) => {
-            const key = `${post.date}-${post.branch}`;
-            if (!acc[key]) {
-              acc[key] = {
-                date: post.date,
-                branch: post.branch,
-                speedCount: 0,
-                speedPrice: 0,
-                normalCount: 0,
-                normalPrice: 0,
-                thabalCount: 0,
-                thabalPrice: 0,
-                totalPrice: 0,
-              };
-            }
-    
-            // Parse string numbers to integers where applicable
-            const speedCount = parseInt(post.speed, 10) || 0;
-            const normalCount = parseInt(post.normal, 10) || 0;
-            const thabalCount = parseInt(post.thabal, 10) || 0;
-    
-            acc[key].speedCount += speedCount;
-            acc[key].speedPrice += post.SpeedResult || 0;
-            acc[key].normalCount += normalCount;
-            acc[key].normalPrice += post.NormalResult || 0;
-            acc[key].thabalCount += thabalCount;
-            acc[key].thabalPrice += post.ThabalResult || 0;
-            acc[key].totalPrice += (post.SpeedResult || 0) + (post.NormalResult || 0) + (post.ThabalResult || 0);
-    
-            return acc;
-          }, {});
-    
-          setData(Object.values(groupedData));
-    
-          // Calculate grand totals
-          const grandTotals = Object.values(groupedData).reduce((acc, post) => {
-            acc.speedCount += post.speedCount;
-            acc.speedPrice += post.speedPrice;
-            acc.normalCount += post.normalCount;
-            acc.normalPrice += post.normalPrice;
-            acc.thabalCount += post.thabalCount;
-            acc.thabalPrice += post.thabalPrice;
-            acc.totalPrice += post.totalPrice;
-            return acc;
-          }, {
+  const fetchDailyPosts = async () => {
+    try {
+      setIsLoading(true);
+      let queryRef = collection(db, 'posts');
+
+      if (startDate) queryRef = query(queryRef, where('date', '>=', startDate));
+      if (endDate) queryRef = query(queryRef, where('date', '<=', endDate));
+
+      const snapshot = await getDocs(queryRef);
+      const posts = snapshot.docs.map(doc => doc.data());
+
+      // Group the posts by date and branch
+      const groupedData = posts.reduce((acc, post) => {
+        const key = `${post.date}-${post.branch}`;
+        if (!acc[key]) {
+          acc[key] = {
+            date: post.date,
+            branch: post.branch,
             speedCount: 0,
             speedPrice: 0,
             normalCount: 0,
@@ -82,15 +42,57 @@ function DailyPostDetails() {
             thabalCount: 0,
             thabalPrice: 0,
             totalPrice: 0,
-          });
-    
-          setTotals(grandTotals);
-        } catch (error) {
-          console.error('Error fetching daily posts:', error);
-        } finally {
-          setIsLoading(false);
+          };
         }
-      };
+
+        // Parse string numbers to integers where applicable
+        const speedCount = parseInt(post.speed, 10) || 0;
+        const normalCount = parseInt(post.normal, 10) || 0;
+        const thabalCount = parseInt(post.thabal, 10) || 0;
+
+        acc[key].speedCount += speedCount;
+        acc[key].speedPrice += post.SpeedResult || 0;
+        acc[key].normalCount += normalCount;
+        acc[key].normalPrice += post.NormalResult || 0;
+        acc[key].thabalCount += thabalCount;
+        acc[key].thabalPrice += post.ThabalResult || 0;
+        acc[key].totalPrice += (post.SpeedResult || 0) + (post.NormalResult || 0) + (post.ThabalResult || 0);
+
+        return acc;
+      }, {});
+
+      setData(Object.values(groupedData));
+
+      // Calculate grand totals
+      const grandTotals = Object.values(groupedData).reduce((acc, post) => {
+        acc.speedCount += post.speedCount;
+        acc.speedPrice += post.speedPrice;
+        acc.normalCount += post.normalCount;
+        acc.normalPrice += post.normalPrice;
+        acc.thabalCount += post.thabalCount;
+        acc.thabalPrice += post.thabalPrice;
+        acc.totalPrice += post.totalPrice;
+        return acc;
+      }, {
+        speedCount: 0,
+        speedPrice: 0,
+        normalCount: 0,
+        normalPrice: 0,
+        thabalCount: 0,
+        thabalPrice: 0,
+        totalPrice: 0,
+      });
+
+      setTotals(grandTotals);
+    } catch (error) {
+      console.error('Error fetching daily posts:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    
     fetchDailyPosts();
   }, [startDate, endDate]); // refetch data when startDate or endDate change
 
